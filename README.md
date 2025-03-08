@@ -4,7 +4,7 @@
 This script adds fully operational bucket movement capabilities for utility trucks in GTA V, allowing you to raise, lower, and rotate the bucket—with any peds onboard—and enhancing vehicle with refined livery, warning lights, and stabilizer legs.
 
 ## Preview
-[![preview](https://r2.fivemanage.com/XMCfCRidUHgGkyCuAga9N/image/smoke_utillitruck.jpg)]([https://youtu.be/](https://youtu.be/foCLvxRO0ZQ))
+[![preview](https://r2.fivemanage.com/XMCfCRidUHgGkyCuAga9N/image/smoke_utillitruck.jpg)](https://youtu.be/foCLvxRO0ZQ)
 
 ### Features
 - Bucket movement is synced with all players using statebag.

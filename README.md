@@ -1,5 +1,5 @@
 # Smoke UtilliTruck
-
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X51AO0VG)
 ## Overview
 This script adds fully operational bucket movement capabilities for utility trucks in GTA V, allowing you to raise, lower, and rotate the bucket—with any peds onboard—and enhancing vehicle with refined livery, warning lights, and stabilizer legs.
 

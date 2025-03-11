@@ -6,21 +6,30 @@ local MOVEMENT = {
 local COLLISION = {
 
     {
-        Model = `prop_crate_06a`,
-        Bone = "bucket",
-        Position = vec3(0.0, -0.36, -0.86),
-        Rotation = vec3(0.0, 0.0, 90.0)
+        model = `prop_crate_06a`,
+        bone = "bucket",
+        position = vec3(0.0, -0.36, -0.86),
+        rotation = vec3(0.0, 0.0, 90.0)
     },
     {
-        Model = `prop_skate_rail`,
-        Bone = "arm_1",
-        Position = vec3(0.0, 3.0, 0.06)
+        model = `prop_skate_rail`,
+        bone = "arm_1",
+        position = vec3(0.0, 3.0, 0.06)
     },
     {
-        Model = `prop_skate_rail`,
-        Bone = "arm_2",
-        Position = vec3(0.0, -3.4, 0.1)
-    }}
+        model = `prop_skate_rail`,
+        bone = "arm_2",
+        position = vec3(0.0, -3.4, 0.1)
+    }
+}
+
+local SOUND = {
+    ambient = 'Crane',
+    script = 'Container_Lifter',
+    scene = 'DOCKS_HEIST_USING_CRANE',
+    name = 'Move_U_D',
+    ref = 'CRANE_SOUNDS',
+}
 
 local PlayEntityAnim = PlayEntityAnim
 local SetEntityAnimCurrentTime = SetEntityAnimCurrentTime
@@ -37,11 +46,15 @@ local switchMode = 1
 local dict = MOVEMENT[switchMode].dict
 local anim = MOVEMENT[switchMode].anim
 local animTime = { 0.0, 0.0 }
+local soundId = -1
 
 local function loadAnimationDicts()
     lib.array.forEach(MOVEMENT, function(type)
         lib.requestAnimDict(type.dict)
     end)
+
+    RequestAmbientAudioBank(SOUND.ambient, false)
+    lib.requestAudioBank(SOUND.script)
 end
 
 local function moveVertical(direction)
@@ -88,9 +101,28 @@ local function moveHorizontal(direction)
     SetEntityAnimSpeed(craneVehicle, dict, anim, 0.1 * direction)
 end
 
+local function playSound()
+    if not IsAudioSceneActive(SOUND.scene) then
+        StartAudioScene(SOUND.scene)
+    end
+    soundId = GetSoundId()
+    if HasSoundFinished(soundId) then
+        PlaySoundFromEntity(soundId, SOUND.name, craneVehicle, SOUND.ref, false, 0)
+    end
+end
+
+local function stopSound()
+    if soundId == -1 then return end
+
+    StopSound(soundId)
+    ReleaseSoundId(soundId)
+    soundId = -1
+end
+
 local function activateCrane()
     CreateThread(function()
         loadAnimationDicts()
+        playSound()
         Entity(cache.ped).state:set('craneMode', switchMode, true)
         while craneState and craneVehicle do
             dict = MOVEMENT[switchMode].dict
@@ -120,6 +152,8 @@ local function activateCrane()
         end
 
         lib.hideTextUI()
+        stopSound()
+
         craneState = false
     end)
 end
@@ -127,10 +161,10 @@ end
 local function createCollision()
     local objs = {}
     lib.array.forEach(COLLISION, function(col)
-        local model = col.Model
-        local bone = GetEntityBoneIndexByName(craneVehicle, col.Bone)
-        local pos = col.Position
-        local rot = col.Rotation or vec3(0.0, 0.0, 0.0)
+        local model = col.model
+        local bone = GetEntityBoneIndexByName(craneVehicle, col.bone)
+        local pos = col.position
+        local rot = col.rotation or vec3(0.0, 0.0, 0.0)
         local coords = GetOffsetFromEntityInWorldCoords(craneVehicle, 0.0, 0.0, -20)
 
         lib.RequestModel(model)

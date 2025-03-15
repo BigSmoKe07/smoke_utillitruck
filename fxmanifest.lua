@@ -5,7 +5,7 @@ lua54 'yes'
 
 name 'smoke_utillitruck'
 description 'SpawnCode: utillitruck'
-repository 'https://github.com/BigSmoKe07/smoke_drawbridge'
+repository 'https://github.com/BigSmoKe07/smoke_utillitruck'
 version '1.0.0'
 author 'BigSmoKe07'
 

@@ -6,7 +6,7 @@ lua54 'yes'
 name 'smoke_utillitruck'
 description 'SpawnCode: utillitruck'
 repository 'https://github.com/BigSmoKe07/smoke_utillitruck'
-version '1.0.0'
+version '1.0.1'
 author 'BigSmoKe07'
 
 files {

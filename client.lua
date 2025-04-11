@@ -247,7 +247,7 @@ AddStateBagChangeHandler('crane', nil, function(bagName, _, value)
 end)
 
 lib.onCache('vehicle', function(vehicle)
-    if not vehicle or GetEntityModel(vehicle) ~= `utillitruck4` then
+    if not vehicle or GetEntityModel(vehicle) ~= `utillitruck4` or cache.seat ~= -1 then
         ---@diagnostic disable-next-line: cast-local-type
         craneVehicle = false
         return
